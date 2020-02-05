@@ -1,7 +1,10 @@
-default: clean python saxon schematron package
+default: clean ant python saxon schematron package
 
 clean:
 	@rm -rf target
+
+ant:
+	@sh scripts/ant.sh
 
 python:
 	@sh scripts/python.sh
@@ -19,4 +22,4 @@ package:
 	@sh scripts/package.sh win64 win
 
 docker:
-	docker build -t openpeppol/pdk:dev .
+	@docker build -t openpeppol/pdk:dev .
