@@ -5,7 +5,7 @@
 
 1. Download package for your platform.
 2. Unzip
-3. Add environment variabel `PDK_PATH` pointing to the unzipped folder.
+3. Add environment variabel `PDK_PATH` pointing to the unzipped folder. (Maybe not needed?)
 4. Add `$PDK_PATH/bin` to your `PATH` variabel.
 
 

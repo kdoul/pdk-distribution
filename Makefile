@@ -4,16 +4,19 @@ clean:
 	@rm -rf target
 
 python:
-	@sh tools/python.sh
+	@sh scripts/python.sh
 
 saxon:
-	@sh tools/saxon.sh
+	@sh scripts/saxon.sh
 
 schematron:
-	@sh tools/schematron.sh
+	@sh scripts/schematron.sh
 
 package:
-	@sh tools/package.sh linux64 nix
-	@sh tools/package.sh macos64 nix
-	@sh tools/package.sh win32 win
-	@sh tools/package.sh win64 win
+	@sh scripts/package.sh linux64 nix
+	@sh scripts/package.sh macos64 nix
+	@sh scripts/package.sh win32 win
+	@sh scripts/package.sh win64 win
+
+docker:
+	docker build -t openpeppol/pdk:dev .
