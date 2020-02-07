@@ -34,8 +34,11 @@
 * Hugo?
   * Standalone (Go-based)
 * Simple web server?
+  * `jruby -run -e httpd . -p 8000`
+  * https://github.com/planetruby/awesome-webservers#webrick
 * Scripts?
   * Python?
+
 
 ### Runtimes
 

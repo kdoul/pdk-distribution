@@ -11,5 +11,3 @@ test ! -e $DIST/common/lib/jruby || rm -rf $DIST/common/lib/jruby
 
 unzip -qo $TMP/jruby-dist-${VERSION}-bin.zip -d $DIST/common/lib
 mv $DIST/common/lib/jruby-${VERSION} $DIST/common/lib/jruby
-
-$DIST/common/lib/jruby/bin/jruby $DIST/common/lib/jruby/bin/jgem install asciidoctor
