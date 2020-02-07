@@ -38,3 +38,8 @@ jobs:
       with:
         files: target/pkg/*.zip
         type: application/zip
+
+    - uses: actions/upload-artifact@v1
+      with:
+        name: packages
+        path: target/pkg
