@@ -46,6 +46,8 @@
   * Oracle edition is not allowed to be redistributed.
   * RedHat version seem to be usable.
     * Download: https://developers.redhat.com/products/openjdk/download
+  * Amazon Corrette
+  * OpenJDK (Docker only?)
 * Python 3 - Available as embeddable zip file for Windows.
   * Download: https://www.python.org/downloads/windows/
   * Enables:

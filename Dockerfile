@@ -5,11 +5,16 @@ ADD static/docker /linux64
 
 RUN apk --no-cache add unzip \
  && unzip -q linux64.zip -d /linux64 \
- && mkdir -p /linux64/src
+ && mkdir -p /linux64/src \
+ && rm -rf /linux64/lib/corretto
 
 
 
 FROM openjdk:8u212-jre-alpine3.9
+#FROM alpine:3.11
+#FROM frolvlad/alpine-glibc:alpine-3.11_glibc-2.30
+
+ENV JAVA_HOME=/lib/corretto
 
 COPY --from=base /linux64 /
 
