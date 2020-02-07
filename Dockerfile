@@ -4,7 +4,7 @@ ADD target/pkg/linux64.zip /
 ADD static/docker /linux64
 
 RUN apk --no-cache add unzip \
- && unzip linux64.zip -d /linux64 \
+ && unzip -q linux64.zip -d /linux64 \
  && mkdir -p /linux64/src
 
 

@@ -18,10 +18,18 @@ download() {
 }
 
 # Run fetchers
-for fetcher in $(ls $PROJECT/scripts/fetcher/*.sh); do
-  name=$(echo $fetcher | sed 's:\.sh$::')
+if [ $1 ]; then
+  for fetcher in $@; do
+    echo "--- Running $fetcher"
+    . $PROJECT/scripts/fetcher/${fetcher}.sh
+    echo
+  done
+else
+  for fetcher in $(ls $PROJECT/scripts/fetcher/*.sh); do
+    name=$(echo $fetcher | sed 's:\.sh$::')
 
-  echo "--- Running $name"
-  . $fetcher
-  echo
-done
+    echo "--- Running $name"
+    . $fetcher
+    echo
+  done
+fi

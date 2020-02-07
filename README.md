@@ -47,5 +47,7 @@
   * Download: https://www.python.org/downloads/windows/
   * Enables:
     * Simple web server
+    * Scripts?
 * Ruby
+  * JRuby
   * Traveling Ruby? https://phusion.github.io/traveling-ruby/
