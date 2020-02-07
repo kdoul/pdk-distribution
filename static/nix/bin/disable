@@ -1,0 +1,6 @@
+#!/bin/sh
+
+if [ $PDK_PATH ]; then
+    export PATH=$(echo $PATH | sed "s:${PDK_PATH}/bin\:::")
+    unset PDK_PATH
+fi

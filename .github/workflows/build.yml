@@ -5,7 +5,8 @@ on:
     branches:
       - master
   release:
-    types: [published]
+    types: 
+      - published
 
 jobs:
   build:
@@ -13,7 +14,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - name: Checkout
+      uses: actions/checkout@v1
 
     - name: Library cache
       id: cache
@@ -28,7 +30,8 @@ jobs:
     - name: Build Docker image
       run: make docker
 
-    - uses: klakegg/github-upload@v0.9.1
+    - name: Upload build artifacts
+      uses: klakegg/github-upload@v0.9.1
       if: startsWith(github.ref, 'refs/tags/')
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
