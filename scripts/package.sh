@@ -5,6 +5,8 @@ TARGET=$PROJECT/target
 DIST=$1
 GROUP=$2
 
+echo "--- Package $DIST"
+
 mkdir -p $TARGET/pkg
 test -e $TARGET/pkg/$DIST.zip && rm -rf $TARGET/pkg/$DIST.zip
 
@@ -21,3 +23,5 @@ for a in "static" "target/dist"; do
     fi
   done
 done
+
+echo

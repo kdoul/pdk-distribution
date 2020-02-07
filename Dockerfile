@@ -9,7 +9,7 @@ RUN apk --no-cache add unzip \
 
 
 
-FROM openjdk:8u212-jdk-alpine3.9
+FROM openjdk:8u212-jre-alpine3.9
 
 COPY --from=base /linux64 /
 

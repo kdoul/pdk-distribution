@@ -1,19 +1,10 @@
-default: clean ant python saxon schematron package
+default: clean fetch package
 
 clean:
 	@rm -rf target
 
-ant:
-	@sh scripts/ant.sh
-
-python:
-	@sh scripts/python.sh
-
-saxon:
-	@sh scripts/saxon.sh
-
-schematron:
-	@sh scripts/schematron.sh
+fetch:
+	@sh scripts/fetch.sh
 
 package:
 	@sh scripts/package.sh linux64 nix
