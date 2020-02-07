@@ -24,8 +24,11 @@ jobs:
         path: tmp
         key: libs
 
-    - name: Build distributions
-      run: make
+    - name: Prepare files
+      run: make clean fetch
+
+    - name: Create packages
+      run: make package
 
     - name: Build Docker image
       run: make docker
@@ -39,7 +42,7 @@ jobs:
         files: target/pkg/*.zip
         type: application/zip
 
-    - uses: actions/upload-artifact@v1
-      with:
-        name: packages
-        path: target/pkg
+#    - uses: actions/upload-artifact@v1
+#      with:
+#        name: packages
+#        path: target/pkg

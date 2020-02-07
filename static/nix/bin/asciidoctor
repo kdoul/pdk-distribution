@@ -1,5 +1,5 @@
 #!/bin/sh
 
-PDK_PATH=$(dirname $(dirname "$0"))
+export PDK_PATH=$(dirname $(dirname "$0"))
 
 exec $PDK_PATH/lib/jruby/bin/asciidoctor $@

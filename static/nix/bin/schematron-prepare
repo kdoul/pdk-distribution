@@ -5,13 +5,14 @@ if [ ! $2 ]; then
   exit 1
 fi
 
-PDK_PATH=$(dirname $(dirname "$0"))
-SAXON_PATH=$PDK_PATH/lib/saxon/saxon.jar
+export PDK_PATH=$(dirname $(dirname "$0"))
+export JAVA_HOME=$PDK_PATH/lib/corretto
+export SAXON_PATH=$PDK_PATH/lib/saxon/saxon.jar
 
-java ${JAVA_OPTS:-} -cp $SAXON_PATH net.sf.saxon.Transform \
+$JAVA_HOME/bin/java ${JAVA_OPTS:-} -cp $SAXON_PATH net.sf.saxon.Transform \
   -xsl:$PDK_PATH/lib/schematron/iso_dsdl_include.xsl \
   -s:$1 \
-| java ${JAVA_OPTS:-} -cp $SAXON_PATH net.sf.saxon.Transform \
+| $JAVA_HOME/bin/java ${JAVA_OPTS:-} -cp $SAXON_PATH net.sf.saxon.Transform \
   -xsl:$PDK_PATH/lib/schematron/iso_abstract_expand.xsl \
   -s:- \
   -o:$2
