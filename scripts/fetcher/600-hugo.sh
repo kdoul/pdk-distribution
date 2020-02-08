@@ -8,7 +8,7 @@ mkdir -p $DIST/linux64/bin
 download hugo_${VERSION}_Linux-64bit.tar.gz \
   https://github.com/gohugoio/hugo/releases/download/v${VERSION}/hugo_${VERSION}_Linux-64bit.tar.gz
 
-tar xvzf $TMP/hugo_${VERSION}_Linux-64bit.tar.gz -C $DIST/linux64/bin hugo
+tar xzf $TMP/hugo_${VERSION}_Linux-64bit.tar.gz -C $DIST/linux64/bin hugo
 
 # MacOS
 mkdir -p $DIST/macos64/bin
@@ -16,7 +16,7 @@ mkdir -p $DIST/macos64/bin
 download hugo_${VERSION}_macOS-64bit.tar.gz \
   https://github.com/gohugoio/hugo/releases/download/v${VERSION}/hugo_${VERSION}_macOS-64bit.tar.gz
 
-tar xvzf $TMP/hugo_${VERSION}_macOS-64bit.tar.gz -C $DIST/macos64/bin hugo
+tar xzf $TMP/hugo_${VERSION}_macOS-64bit.tar.gz -C $DIST/macos64/bin hugo
 
 # Win32
 mkdir -p $DIST/win32/bin

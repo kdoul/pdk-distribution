@@ -12,6 +12,7 @@ mkdir -p $TARGET $TMP
 # Function: download [filename] [url]
 download() {
   if [ ! -e $TMP/$1 ]; then
+    echo "* Fetching $2"
     wget -q $2 \
       -O $TMP/$1
   fi
