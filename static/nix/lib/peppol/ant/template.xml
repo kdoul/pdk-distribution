@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="template" default="all">
+
+    <!-- Make available environment variables if not defined in the proejct build file. -->
+    <property environment="env"/>
+    
+    <!-- Default properties -->
+    <property name="docsDir" value="docs"/>
+    <property name="targetDir" value="target" />
+
+    <!-- Include mixins. -->
+    <import file="mixins/saxon.xml"/>
+    <import file="mixins/vefa-validator.xml"/>
+
+    <!--
+        Main targets
+    -->
+    <target name="clean">
+        <!-- Delete target folder -->
+        <delete dir="${targetDir}"/>
+    </target>
+
+    <target name="all" depends="init,build,test,docs,site,package"/>
+
+    <!--
+        Init targets
+    -->
+    <target name="init" depends="init-pre,init-perform,init-post"/>
+    <target name="init-pre"/>
+    <target name="init-perform">
+        <!-- Create target folder -->
+        <mkdir dir="${targetDir}"/>
+
+        <!-- TODO Create build environment file if it doesn't exists. -->
+    </target>
+    <target name="init-post" />
+
+    <!--
+        Build targets
+    -->
+    <target name="build" depends="build-pre,build-perform,build-post"/>
+    <target name="build-pre"/>
+    <target name="build-perform"/>
+    <target name="build-post"/>
+
+    <!--
+        Test targets
+    -->
+    <target name="test" depends="test-pre,test-perform,test-post"/>
+    <target name="test-pre"/>
+    <target name="test-perform">
+        <!-- Triggering build with vefa-validator. -->
+        <validator-build/>
+    </target>
+    <target name="test-post"/>
+
+    <!--
+        Documentation targets
+    -->
+    <target name="docs" depends="docs-pre,docs-perform,docs-post"/>
+    <target name="docs-pre"/>
+    <target name="docs-perform">
+        <!-- Generate HTML for all main.adoc files in guide folder. -->
+        <apply executable="asciidoctor">
+            <arg value="-R"/>
+            <arg value="${docsDir}"/>
+            <arg value="-D"/>
+            <arg value="target/site"/>
+            <fileset dir="guide" includes="**/main.adoc"/>
+        </apply>
+
+        <!-- Rename generated "main.html" files "index.html". -->
+        <move todir="target/site">
+            <fileset dir="target/site" includes="**/main.html"/>
+            <filtermapper>
+                <replacestring from="main.html" to="index.html"/>
+            </filtermapper>
+        </move>
+
+        <!-- Copy folders containing ".adocassets" file -->
+        <!-- <copy todir="target/site"> -->
+            <!-- <fileset dir="${docsDir}" includes="**/.adocassets"/>
+            <filtermapper>
+                <replacestring from=".adocassets"/>
+            </filtermapper> -->
+            <!-- <fileset dir="${docsDir}" includes="**/.adocassets"/> -->
+        <!-- </copy> -->
+
+        <!-- Delete ".adocassets" files -->
+        <delete dir="target/site" includes="**/.adocassets"/>
+    </target>
+    <target name="docs-post"/>
+
+    <!--
+        Site targets
+    -->
+    <target name="site" depends="site-pre,site-perform,site-post"/>
+    <target name="site-pre"/>
+    <target name="site-perform"/>
+    <target name="site-post"/>
+
+    <!-- 
+        Packaging targets
+    -->
+    <target name="package" depends="package-pre,package-perform,package-post"/>
+    <target name="package-pre"/>
+    <target name="package-perform"/>
+    <target name="package-post"/>
+
+</project>

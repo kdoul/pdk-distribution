@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="vefa-validator">
+
+    <macrodef name="validator-build">
+        <attribute name="identifier" default="rules"/>
+        <attribute name="source" default=""/>
+        <attribute name="target" default="target/validator"/>
+        <attribute name="scope" default="rules,${docsDir}"/>
+
+        <sequential>
+            <java 
+                classname="no.difi.vefa.validator.dist.Cli"
+                fork="true"
+                failonerror="true">
+                <arg value="build"/>
+                <arg value="-x"/>
+                <arg value="-t"/>
+                <arg value="-n"/>
+                <arg value="@{identifier}" />
+                <arg value="-a"/>
+                <arg value="@{scope}"/>
+                <arg value="-target"/>
+                <arg value="@{target}"/>
+                <arg value="@{source}"/>
+                <classpath>
+                    <fileset dir="${env.PDK_PATH}/lib/vefa-validator/lib" includes="*.jar"/>
+                </classpath>
+            </java>
+        </sequential>
+    </macrodef>
+
+</project>

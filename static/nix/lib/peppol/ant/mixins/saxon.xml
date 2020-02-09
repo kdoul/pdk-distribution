@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="saxon">
+
+    <!-- <property
+        name="saxonClasspath"
+        classpath="${env.PDK_PATH}/lib/saxon/saxon.jar"/> -->
+
+    <macrodef name="saxon-xquery">
+        <attribute name="source"/>
+        <attribute name="query"/>
+        <attribute name="output"/>
+
+        <sequential>
+            <echo>Generating @{output}</echo>
+            <java 
+                classname="net.sf.saxon.Query"
+                failonerror="true"
+                classpath="${env.PDK_PATH}/lib/saxon/saxon.jar">
+                <arg value="-s:@{source}"/>
+                <arg value="-q:@{query}"/>
+                <arg value="-o:@{output}"/>
+            </java>
+        </sequential>
+    </macrodef>
+
+</project>
