@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="saxon">
 
-    <!-- <property
-        name="saxonClasspath"
-        classpath="${env.PDK_PATH}/lib/saxon/saxon.jar"/> -->
+    <property
+        name="saxon.classpath"
+        value="${env.PDK_PATH}/lib/saxon/saxon.jar"/>
 
     <macrodef name="saxon-xquery">
         <attribute name="source"/>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="asciidoctor"
+    xmlns:if="ant:if"
+    xmlns:unless="ant:unless">
+
+    <macrodef name="asciidoctor-guided">
+        <attribute name="source"/>
+        <attribute name="target"/>
+        <attribute name="error-on" default=""/> <!-- blank equals "FATAL" -->
+
+        <sequential>
+            <!-- Generate HTML for all main.adoc files in guide folder. -->
+            <apply
+                executable="asciidoctor"
+                failonerror="true">
+                <arg value="-v"/>
+                <arg value="--failure-level" unless:blank="@{error-on}"/>
+                <arg value="@{error-on}" unless:blank="@{error-on}"/>
+                <arg value="-R"/>
+                <arg value="@{source}"/>
+                <arg value="-D"/>
+                <arg value="@{target}"/>
+                <fileset dir="@{source}" includes="**/main.adoc"/>
+            </apply>
+
+            <!-- Rename generated "main.html" files "index.html". -->
+            <move todir="@{target}">
+                <fileset dir="@{target}" includes="**/main.html"/>
+                <filtermapper>
+                    <replacestring from="main.html" to="index.html"/>
+                </filtermapper>
+            </move>
+
+            <!-- Copy folders containing ".adocassets" file -->
+            <!-- <copy todir="target/site"> -->
+                <!-- <fileset dir="${docsDir}" includes="**/.adocassets"/>
+                <filtermapper>
+                    <replacestring from=".adocassets"/>
+                </filtermapper> -->
+                <!-- <fileset dir="${docsDir}" includes="**/.adocassets"/> -->
+            <!-- </copy> -->
+
+            <!-- Delete ".adocassets" files -->
+            <delete dir="@{target}" includes="**/.adocassets"/>
+        </sequential>
+    </macrodef>
+
+</project>
