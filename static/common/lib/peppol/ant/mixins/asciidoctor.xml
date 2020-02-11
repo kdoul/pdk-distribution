@@ -31,17 +31,19 @@
                 </filtermapper>
             </move>
 
-            <!-- Copy folders containing ".adocassets" file -->
-            <!-- <copy todir="target/site"> -->
-                <!-- <fileset dir="${docsDir}" includes="**/.adocassets"/>
-                <filtermapper>
-                    <replacestring from=".adocassets"/>
-                </filtermapper> -->
-                <!-- <fileset dir="${docsDir}" includes="**/.adocassets"/> -->
-            <!-- </copy> -->
-
-            <!-- Delete ".adocassets" files -->
-            <delete dir="@{target}" includes="**/.adocassets"/>
+            <!-- Copies folders containing .adocassets -->
+            <pathconvert pathsep="," property="filePaths">
+                <map from="@{source}/" to="" />
+                <regexpmapper from="\${basedir}${file.separator}(.*)\${file.separator}" to="\1/**" />
+                <path>
+                    <fileset dir="@{source}" casesensitive="yes">
+                        <include name="**/.adocassets" />
+                    </fileset>
+                </path>
+            </pathconvert>
+            <copy todir="@{target}">
+                <fileset dir="@{source}" includes="${filePaths}" excludes="**/.adocassets"/>
+            </copy>
         </sequential>
     </macrodef>
 

@@ -10,17 +10,27 @@
 
     <!-- Include mixins -->
     <import file="mixins/asciidoctor.xml"/>
+    <import file="mixins/jruby.xml"/>
     <import file="mixins/saxon.xml"/>
     <import file="mixins/vefa-validator.xml"/>
 
     <!--
         Main targets
     -->
+
+    <!-- Delete target folder -->
     <target name="clean">
         <!-- Delete target folder -->
         <delete dir="${targetDir}"/>
     </target>
 
+    <!-- Run a server to display content of 'target/site' -->
+    <target name="server">
+        <!-- Run server -->
+        <jruby-server path="${basedir}/target/site"/>
+    </target>
+
+    <!-- Trigger build targets -->
     <target name="all" depends="init,build,test,docs,site,package"/>
 
     <!--
@@ -51,8 +61,7 @@
     <target name="test-pre"/>
     <target name="test-perform">
         <!-- Triggering build with vefa-validator. -->
-        <validator-build
-            scope="rules,${docsDir}"/>
+        <validator-build scope="rules,${docsDir}"/>
     </target>
     <target name="test-post"/>
 

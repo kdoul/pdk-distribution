@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="saxon">
 
-    <property
-        name="saxon.classpath"
-        value="${env.PDK_PATH}/lib/saxon/saxon.jar"/>
+    <property name="saxon.classpath" value="${env.PDK_PATH}/lib/saxon/saxon.jar"/>
 
     <macrodef name="saxon-xquery">
         <attribute name="source"/>
@@ -15,7 +13,7 @@
             <java 
                 classname="net.sf.saxon.Query"
                 failonerror="true"
-                classpath="${env.PDK_PATH}/lib/saxon/saxon.jar">
+                classpath="${saxon.classpath}">
                 <arg value="-s:@{source}"/>
                 <arg value="-q:@{query}"/>
                 <arg value="-o:@{output}"/>

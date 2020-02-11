@@ -47,6 +47,7 @@
     * Download: https://developers.redhat.com/products/openjdk/download
   * Amazon Corretto (GPLv2)
   * ~~OpenJDK (Docker only?)~~
+  * AdoptOpenJDK?
 * Ruby
   * JRuby
   * Scripting
