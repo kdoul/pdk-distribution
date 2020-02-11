@@ -12,6 +12,7 @@
     <import file="mixins/asciidoctor.xml"/>
     <import file="mixins/jruby.xml"/>
     <import file="mixins/saxon.xml"/>
+    <import file="mixins/vefa-structure.xml"/>
     <import file="mixins/vefa-validator.xml"/>
 
     <!--
@@ -51,7 +52,10 @@
     -->
     <target name="build" depends="build-pre,build-perform,build-post"/>
     <target name="build-pre"/>
-    <target name="build-perform"/>
+    <target name="build-perform">
+        <!-- Trigger VEFA Structure -->
+        <structure-build/>
+    </target>
     <target name="build-post"/>
 
     <!--

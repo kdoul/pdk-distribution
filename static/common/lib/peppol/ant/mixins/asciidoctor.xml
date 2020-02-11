@@ -11,8 +11,9 @@
         <sequential>
             <!-- Generate HTML for all main.adoc files in guide folder. -->
             <apply
-                executable="asciidoctor"
+                executable="${env.PDK_PATH}/lib/jruby/bin/jruby"
                 failonerror="true">
+                <arg value="${env.PDK_PATH}/lib/jruby/bin/asciidoctor"/>
                 <arg value="-v"/>
                 <arg value="--failure-level" unless:blank="@{error-on}"/>
                 <arg value="@{error-on}" unless:blank="@{error-on}"/>
