@@ -11,8 +11,23 @@
         <sequential>
             <!-- Generate HTML for all main.adoc files in guide folder. -->
             <apply
+                executable="${env.PDK_PATH}/lib/jruby/bin/jruby.bat"
+                failonerror="true"
+				osfamily="windows">
+                <arg value="${env.PDK_PATH}/lib/jruby/bin/asciidoctor"/>
+                <arg value="-v"/>
+                <arg value="--failure-level" unless:blank="@{error-on}"/>
+                <arg value="@{error-on}" unless:blank="@{error-on}"/>
+                <arg value="-R"/>
+                <arg value="@{source}"/>
+                <arg value="-D"/>
+                <arg value="@{target}"/>
+                <fileset dir="@{source}" includes="**/main.adoc"/>
+            </apply>
+            <apply
                 executable="${env.PDK_PATH}/lib/jruby/bin/jruby"
-                failonerror="true">
+                failonerror="true"
+				osfamily="unix">
                 <arg value="${env.PDK_PATH}/lib/jruby/bin/asciidoctor"/>
                 <arg value="-v"/>
                 <arg value="--failure-level" unless:blank="@{error-on}"/>
