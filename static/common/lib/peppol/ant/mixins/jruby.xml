@@ -15,14 +15,4 @@
         </sequential>
     </macrodef>
 
-    <!-- Running a simple http server using JRuby -->
-    <macrodef name="jruby-server">
-        <attribute name="port" default="${jruby.server.port}"/>
-        <attribute name="path" default="${basedir}"/>
-
-        <sequential>
-            <jruby args="-run -e httpd @{path} -p @{port}"/>
-        </sequential>
-    </macrodef>
-
 </project>
