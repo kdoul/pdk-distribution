@@ -11,3 +11,7 @@ test ! -e $DIST/common/lib/jruby || rm -rf $DIST/common/lib/jruby
 
 unzip -qo $TMP/jruby-dist-${VERSION}-bin.zip -d $DIST/common/lib
 mv $DIST/common/lib/jruby-${VERSION} $DIST/common/lib/jruby
+
+bin=$DIST/common/lib/jruby/bin
+$bin/jruby $bin/jgem install highline
+$bin/jruby $bin/jgem install slop

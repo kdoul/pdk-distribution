@@ -48,8 +48,19 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        files: target/pkg/*.zip
-        type: application/zip
+        script:
+          upload \
+            -f target/pkg/linux64.tar.gz \
+            -n pdk-linux64-${TAG}.tar.gz
+          upload \
+            -f target/pkg/macos64.tar.gz \
+            -n pdk-macos64-${TAG}.tar.gz
+          upload \
+            -f target/pkg/win32.zip \
+            -n pdk-win32-${TAG}.zip
+          upload \
+            -f target/pkg/win64.zip \
+            -n pdk-win64-${TAG}.zip
 
     - name: Push tagged image
       if: startsWith(github.ref, 'refs/tags/')

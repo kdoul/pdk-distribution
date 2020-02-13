@@ -1,10 +1,13 @@
-default: clean fetch package
+default: clean fetch version package
 
 clean:
 	@rm -rf target
 
 fetch:
 	@sh scripts/fetch.sh
+
+version:
+	@sh scripts/version.sh
 
 package: package-linux64 package-macos64 package-win32 package-win64
 

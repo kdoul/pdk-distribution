@@ -20,8 +20,11 @@ for a in "static" "target/dist"; do
       fi
 
       zip -q9r $TARGET/pkg/$DIST.zip *
+      tar rf $TARGET/pkg/$DIST.tar *
     fi
   done
 done
+
+gzip -9 $TARGET/pkg/$DIST.tar
 
 echo
