@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Product Name="Peppol Development Kit (PDK)" Manufacturer="OpenPEPPOL AISBL" Id="3d8f8ab9-86C7-4D14-AEC0-86416A69ABDE" UpgradeCode="3d8f8ab9-7349-453F-94F6-BCB5110BA4FD" Language="1033" Codepage="1252" Version="1.0.0">
+        <Package Id="*" Keywords="Installer" Description="Peppol Development Kit (PDK) Installer" Comments="Foobar is a registered trademark of Acme Ltd." Manufacturer="OpenPEPPOL AISBL" InstallerVersion="100" Languages="1033" Compressed="yes" SummaryCodepage="1252" />
+
+        <Directory Id="TARGETDIR" Name="SourceDir">
+            <Directory Id="ProgramFilesFolder" Name="PFiles">
+                <Directory Id="Peppol" Name="Peppol">
+                    <Directory Id="INSTALLDIR" Name="PDK">
+
+                    </Directory>
+                </Directory>
+            </Directory>
+        </Directory>
+    </Product>
+</Wix>

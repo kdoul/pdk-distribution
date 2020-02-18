@@ -23,5 +23,8 @@ package-win32:
 package-win64:
 	@sh scripts/package-zip.sh win64 win
 
+package-wix:
+	@sh scripts/package-wix.sh
+
 docker:
 	@docker build -t openpeppol/pdk:dev .
