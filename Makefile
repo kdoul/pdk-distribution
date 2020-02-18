@@ -9,7 +9,7 @@ fetch:
 version:
 	@sh scripts/version.sh
 
-package: package-linux64 package-macos64 package-win32 package-win64
+package: package-linux64 package-macos64 package-win32 package-win64 package-wix
 
 package-linux64:
 	@sh scripts/package-tar.sh linux64 nix
