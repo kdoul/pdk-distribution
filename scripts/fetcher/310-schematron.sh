@@ -1,5 +1,9 @@
 #!/bin/sh
 
+set -e
+set -u
+
+
 VERSION=${SCHEMATRON_VERSION:-2017-02-09}
 
 # Create target folder

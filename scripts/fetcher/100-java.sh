@@ -1,5 +1,8 @@
 #!/bin/sh
 
+set -e
+set -u
+
 
 # linux64
 mkdir -p $DIST/linux64/lib/corretto

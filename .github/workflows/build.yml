@@ -42,6 +42,15 @@ jobs:
         file: target/pkg/linux64.tar.gz
         name: pdk-linux64-${TAG}.tar.gz
 
+    - name: Upload deb for linux64
+      uses: klakegg/github-upload@v0.9.1
+      if: startsWith(github.ref, 'refs/tags/')
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        file: target/pkg/linux64.deb
+        name: pdk-linux64-${TAG}.deb
+
     - name: Upload tar.gz for macos64
       uses: klakegg/github-upload@v0.9.1
       if: startsWith(github.ref, 'refs/tags/')

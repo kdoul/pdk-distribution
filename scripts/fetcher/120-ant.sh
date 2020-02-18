@@ -1,5 +1,9 @@
 #!/bin/sh
 
+set -e
+set -u
+
+
 VERSION=${ANT_VERSION:-"1.10.7"}
 
 mkdir -p $DIST/common/lib

@@ -1,5 +1,9 @@
 #!/bin/sh
 
+set -e
+set -u
+
+
 VERSION=${ASCIIDOCTOR_VERSION:-"2.0.10"}
 
 if [ -e $DIST/common/lib/jruby/bin/jruby ]; then

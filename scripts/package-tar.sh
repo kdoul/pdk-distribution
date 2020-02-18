@@ -1,5 +1,8 @@
 #!/bin/sh
 
+set -e
+set -u
+
 PROJECT=$(pwd) # Yes, hack!
 TARGET=$PROJECT/target
 DIST=$1

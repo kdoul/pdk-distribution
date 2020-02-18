@@ -3,7 +3,7 @@
 set -e
 set -u
 
-#sh PDK.wxs.sh > PDK.wxs
+sh PDK.wxs.sh > PDK.wxs
 
 candle PDK.wxs
 

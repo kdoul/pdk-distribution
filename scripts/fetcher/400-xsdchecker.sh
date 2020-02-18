@@ -1,5 +1,9 @@
 #!/bin/sh
 
+set -e
+set -u
+
+
 VERSION=${XSDCHECKER_VERSION:-"1.0.3"}
 
 mkdir -p $DIST/common/lib/xsdchecker

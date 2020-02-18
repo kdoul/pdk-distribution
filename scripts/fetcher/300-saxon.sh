@@ -1,5 +1,9 @@
 #!/bin/sh
 
+set -e
+set -u
+
+
 VERSION=${SAXON_VERSION:-"9.9.1-6"}
 
 mkdir -p $DIST/common/lib/saxon

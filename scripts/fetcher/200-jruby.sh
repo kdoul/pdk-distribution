@@ -1,5 +1,9 @@
 #!/bin/sh
 
+set -e
+set -u
+
+
 VERSION=${JRUBY_VERSION:-"9.2.9.0"}
 
 mkdir -p $DIST/common/lib

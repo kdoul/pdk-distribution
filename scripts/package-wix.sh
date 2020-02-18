@@ -8,7 +8,7 @@ TARGET=$PROJECT/target
 
 echo "--- Package wix"
 
-mkdir -p $TARGET
+mkdir -p $TARGET/pkg
 
 rm -rf $TARGET/pkg-wix
 
@@ -26,25 +26,22 @@ rm -rf $TARGET/pkg-wix/package/lib/jruby/lib/jni/*-SunOS
 rm -rf $TARGET/pkg-wix/package/lib/jruby/lib/jni/*AIX
 rm -rf $TARGET/pkg-wix/package/lib/jruby/lib/jni/*BSD
 
+# Make sure folder is writable for non-root user in wix container.
 chmod 777 $TARGET/pkg-wix
 
-# Create PDK.wxs
-docker run --rm -i \
-  -v $TARGET/pkg-wix:/work \
-  --workdir /work \
-  felfert/wix \
-  sh PDK.wxs.sh > $TARGET/pkg-wix/PDK.wxs
+docker build -t wix-with-extras $PROJECT/package/wix
 
 # Perform build
 docker run --rm -i \
   -v $TARGET/pkg-wix:/work \
   --workdir /work \
-  felfert/wix \
+  wix-with-extras \
   sh build.sh
+
+docker rmi wix-with-extras
 
 test -e $TARGET/pkg-wix/PDK.msi
 
-mkdir -p $TARGET/pkg
-cp $TARGET/pkg-wix/PDK.msi $TARGET/pkg/win64.msi
+mv $TARGET/pkg-wix/PDK.msi $TARGET/pkg/win64.msi
 
 echo

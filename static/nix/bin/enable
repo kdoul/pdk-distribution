@@ -1,8 +1,0 @@
-#!/bin/sh
-
-if [ $PDK_PATH ]; then
-  echo "This or another version of PDK is already enabled. Please disable before re-enabling."
-else
-  export PDK_PATH=$(readlink -f $(dirname $(dirname "$BASH_SOURCE")))
-  export PATH=${PDK_PATH}/bin:${PATH}
-fi

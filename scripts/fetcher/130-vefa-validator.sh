@@ -1,5 +1,9 @@
 #!/bin/sh
 
+set -e
+set -u
+
+
 VERSION=${VEFA_VALIDATOR_VERSION:-2.1.0}
 
 # Create target folder

@@ -1,5 +1,8 @@
 #!/bin/sh
 
+set -e
+set -u
+
 PROJECT=$(pwd) # Yes, hack!
 
 mkdir -p $PROJECT/target/dist/common/lib/peppol

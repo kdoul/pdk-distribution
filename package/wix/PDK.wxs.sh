@@ -29,7 +29,7 @@ folder () {
             if [ $(echo -n $f | wc -m ) -ge 110 ]; then
                 echo "$2\t<!-- $f -->"
             else
-                echo "$2\t<Component Id='c_$(echo "$f" | sed 's:[\-]:..:g' | sed 's:[/]:__:g' | tail -c 70)'>" #Guid='3d8f8ab9-6BE3-460D-A14F-75658D16550B'>"
+                echo "$2\t<Component Id='c_$(echo "$f" | sed 's:[\-]:..:g' | sed 's:[/]:__:g' | tail -c 70)' Guid='$(uuid)'>"
                 echo "$2\t\t<File Id=\"f_$(echo $f | sed 's:[\-]:..:g' | sed 's:[/]:__:g' | tail -c 70)\" Name=\"$(basename $f)\" DiskId=\"1\" Source=\"$f\" KeyPath=\"yes\"/>"
                 echo "$2\t</Component>"
             fi

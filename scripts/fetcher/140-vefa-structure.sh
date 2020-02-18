@@ -1,5 +1,9 @@
 #!/bin/sh
 
+set -e
+set -u
+
+
 VERSION=${VEFA_STRUCTURE_VERSION:-0.7}
 
 # Create target folder
