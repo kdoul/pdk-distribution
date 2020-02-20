@@ -50,7 +50,10 @@
             <!-- Copies folders containing .adocassets -->
             <pathconvert pathsep="," property="filePaths">
                 <map from="@{source}/" to="" />
-                <regexpmapper from="\${basedir}${file.separator}(.*)\${file.separator}" to="\1/**" />
+                <filtermapper>
+                    <replacestring from="${basedir}${file.separator}" to=""/>
+                    <replacestring from=".adocassets" to="**"/>
+                </filtermapper>
                 <path>
                     <fileset dir="@{source}" casesensitive="yes">
                         <include name="**/.adocassets" />
