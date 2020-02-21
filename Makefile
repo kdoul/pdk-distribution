@@ -1,4 +1,6 @@
-default: clean fetch version package
+default: prepare package
+
+prepare: clean fetch version
 
 clean:
 	@rm -rf target
@@ -9,7 +11,13 @@ fetch:
 version:
 	@sh scripts/version.sh
 
-package: package-linux64 package-macos64 package-win32 package-win64 package-wix package-deb
+package: package-linux package-macos package-win
+
+package-linux: package-linux64 package-deb
+
+package-macos: package-macos64
+
+package-win: package-win32 package-win64 package-wix
 
 package-linux64:
 	@sh scripts/package-tar.sh linux64 nix

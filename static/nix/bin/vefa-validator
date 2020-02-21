@@ -1,7 +1,0 @@
-#!/bin/sh
-
-export PDK_PATH=$(dirname $(dirname "$0"))
-export JAVA_HOME=$PDK_PATH/lib/corretto
-export VV_HOME=/lib/vefa-validator
-
-exec $JAVA_HOME/bin/java -classpath .:${VV_HOME}/conf:${VV_HOME}/lib/* no.difi.vefa.validator.dist.Cli $@
