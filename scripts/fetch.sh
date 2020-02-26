@@ -4,7 +4,7 @@
 PROJECT=$(dirname $(dirname "$0"))
 TARGET=$PROJECT/target
 TMP=$PROJECT/tmp
-DIST=$TARGET/dist
+DIST=$TARGET/dist/$1
 
 # Create inital folders
 mkdir -p $TARGET $TMP
@@ -19,18 +19,14 @@ download() {
 }
 
 # Run fetchers
-if [ $1 ]; then
-  for fetcher in $@; do
-    echo "--- Running $fetcher"
-    . $PROJECT/scripts/fetcher/${fetcher}.sh
-    echo
-  done
-else
-  for fetcher in $(ls $PROJECT/scripts/fetcher/*.sh); do
-    name=$(echo $fetcher | sed 's:\.sh$::')
+for arch in $@ common; do
+  if [ -e $PROJECT/fetcher/$arch ] && [ $(find $PROJECT/fetcher/$arch -name *.sh | wc -l) != "0" ]; then
+    for fetcher in $(ls $PROJECT/fetcher/$arch/*.sh); do
+      name=$(echo $fetcher | sed 's:\.sh$::')
 
-    echo "--- Running $name"
-    . $fetcher
-    echo
-  done
-fi
+      echo "--- Running $name"
+      . $fetcher
+      echo
+    done
+  fi
+done
