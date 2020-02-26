@@ -17,20 +17,20 @@ cp -r $PROJECT/package/deb $TARGET/pkg-deb
 mkdir $TARGET/pkg-deb/package
 tar -zxf $TARGET/pkg/linux64.tar.gz -C $TARGET/pkg-deb/package
 
-docker build -t ubuntu-with-fakeroot $PROJECT/package/deb
+docker build -t pdk-package-deb $PROJECT/package/deb
 
 # Perform build
 docker run --rm -i \
   -v $TARGET/pkg-deb:/work \
   --workdir /work \
   -u $(id -u) \
-  ubuntu-with-fakeroot \
+  pdk-package-deb \
   sh build.sh
 
-docker rmi ubuntu-with-fakeroot
+docker rmi pdk-package-deb
 
-test -e $TARGET/pkg-deb/debian.deb
+test -e $TARGET/pkg-deb/linux64.deb
 
-mv $TARGET/pkg-deb/debian.deb $TARGET/pkg/linux64.deb
+mv $TARGET/pkg-deb/linux64.deb $TARGET/pkg/
 
 echo

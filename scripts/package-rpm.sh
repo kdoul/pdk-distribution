@@ -1,0 +1,36 @@
+#!/bin/sh
+
+set -e
+set -u
+
+PROJECT=$(pwd) # Yes, hack!
+TARGET=$PROJECT/target
+
+echo "--- Package rpm"
+
+mkdir -p $TARGET/pkg
+
+rm -rf $TARGET/pkg-rpm
+
+cp -r $PROJECT/package/rpm $TARGET/pkg-rpm
+
+mkdir $TARGET/pkg-rpm/package
+tar -zxf $TARGET/pkg/linux64.tar.gz -C $TARGET/pkg-rpm/package
+
+docker build -t pdk-package-rpm $PROJECT/package/rpm
+
+# Perform build
+docker run --rm -i \
+  -v $TARGET/pkg-rpm:/work \
+  --workdir /work \
+  -u $(id -u) \
+  pdk-package-rpm \
+  sh build.sh
+
+docker rmi pdk-package-rpm
+
+test -e $TARGET/pkg-rpm/linux64.rpm
+
+mv $TARGET/pkg-rpm/linux64.rpm $TARGET/pkg/
+
+echo

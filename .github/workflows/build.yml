@@ -27,8 +27,14 @@ jobs:
     - name: Prepare files
       run: make prepare
 
-    - name: Create packages
-      run: make package
+    - name: Build Linux packages
+      run: make package-linux
+
+    - name: Build MacOS packages
+      run: make package-macos
+
+    - name: Build Windows packages
+      run: make package-win
 
     - name: Build Docker image
       run: make docker
@@ -50,6 +56,15 @@ jobs:
       with:
         file: target/pkg/linux64.deb
         name: pdk-linux64-${TAG}.deb
+
+    - name: Upload rpm for linux64
+      uses: klakegg/github-upload@v0.9.1
+      if: startsWith(github.ref, 'refs/tags/')
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        file: target/pkg/linux64.rpm
+        name: pdk-linux64-${TAG}.rpm
 
     - name: Upload tar.gz for macos64
       uses: klakegg/github-upload@v0.9.1

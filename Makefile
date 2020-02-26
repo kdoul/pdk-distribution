@@ -13,7 +13,7 @@ version:
 
 package: package-linux package-macos package-win
 
-package-linux: package-linux64 package-deb
+package-linux: package-linux64 package-deb package-rpm
 
 package-macos: package-macos64
 
@@ -33,6 +33,9 @@ package-win64:
 
 package-deb:
 	@sh scripts/package-deb.sh
+
+package-rpm:
+	@sh scripts/package-rpm.sh
 
 package-wix:
 	@sh scripts/package-wix.sh
