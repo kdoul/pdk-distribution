@@ -80,6 +80,7 @@ jobs:
       with:
         file: target/pkg/linux64.deb
         name: pdk-linux64-${TAG}.deb
+        label: Debian Package (64-bit)
 
     - name: Upload RPM package
       uses: klakegg/github-upload@v0.9.1
@@ -89,6 +90,7 @@ jobs:
       with:
         file: target/pkg/linux64.rpm
         name: pdk-linux64-${TAG}.rpm
+        label: RPM Package (64-bit)
 
     - name: Push edge image
       env:
@@ -183,6 +185,7 @@ jobs:
       with:
         file: target/pkg/win32.msi
         name: pdk-win32-${TAG}.msi
+        label: Windows Installer (32-bit)
 
 
   win64:
@@ -226,3 +229,4 @@ jobs:
       with:
         file: target/pkg/win64.msi
         name: pdk-win64-${TAG}.msi
+        label: Windows Installer (64-bit)
