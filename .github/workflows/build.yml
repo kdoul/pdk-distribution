@@ -60,6 +60,9 @@ jobs:
     - name: Build RPM package
       run: make package-linux64-rpm
 
+    - name: List packages
+      run: ls -lh target/pkg
+
     - name: Build Docker image
       run: make docker
 
@@ -71,6 +74,7 @@ jobs:
       with:
         file: target/pkg/linux64.tar.gz
         name: pdk-linux64-${TAG}.tar.gz
+        label: Linux Package (64-bit)
 
     - name: Upload Debian package
       uses: klakegg/github-upload@v0.9.1
@@ -80,7 +84,7 @@ jobs:
       with:
         file: target/pkg/linux64.deb
         name: pdk-linux64-${TAG}.deb
-        label: Debian Package (64-bit)
+        label: Linux DEB Package (64-bit)
 
     - name: Upload RPM package
       uses: klakegg/github-upload@v0.9.1
@@ -90,7 +94,7 @@ jobs:
       with:
         file: target/pkg/linux64.rpm
         name: pdk-linux64-${TAG}.rpm
-        label: RPM Package (64-bit)
+        label: Linux RPM Package (64-bit)
 
     - name: Push edge image
       env:
@@ -134,6 +138,9 @@ jobs:
     - name: Build tar.gz
       run: make package-macos64-zip
 
+    - name: List packages
+      run: ls -lh target/pkg
+
     - name: Upload tar.gz
       uses: klakegg/github-upload@v0.9.1
       if: startsWith(github.ref, 'refs/tags/')
@@ -142,6 +149,7 @@ jobs:
       with:
         file: target/pkg/macos64.tar.gz
         name: pdk-macos64-${TAG}.tar.gz
+        label: MacOS Package (64-bit)
 
 
   win32:
@@ -160,13 +168,16 @@ jobs:
         path: target/dist/common/lib/peppol/version
 
     - name: Prepare files
-      run: make clean fetch-win64 version
+      run: make clean fetch-win32 version
 
     - name: Build zip
       run: make package-win32-zip
 
     - name: Build Windows Installer
       run: make package-win32-wix
+
+    - name: List packages
+      run: ls -lh target/pkg
 
     - name: Upload zip
       uses: klakegg/github-upload@v0.9.1
@@ -176,6 +187,7 @@ jobs:
       with:
         file: target/pkg/win32.zip
         name: pdk-win32-${TAG}.zip
+        label: Windows Package (32-bit)
 
     - name: Upload Windows Installer
       uses: klakegg/github-upload@v0.9.1
@@ -212,6 +224,9 @@ jobs:
     - name: Build Windows Installer
       run: make package-win64-wix
 
+    - name: List packages
+      run: ls -lh target/pkg
+
     - name: Upload zip
       uses: klakegg/github-upload@v0.9.1
       if: startsWith(github.ref, 'refs/tags/')
@@ -220,6 +235,7 @@ jobs:
       with:
         file: target/pkg/win64.zip
         name: pdk-win64-${TAG}.zip
+        label: Windows Package (64-bit)
 
     - name: Upload Windows Installer
       uses: klakegg/github-upload@v0.9.1

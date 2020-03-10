@@ -11,7 +11,7 @@ GROUP=$2
 echo "--- Package $DIST"
 
 mkdir -p $TARGET/pkg
-test -e $TARGET/pkg/$DIST.zip && rm -rf $TARGET/pkg/$DIST.zip
+test -e $TARGET/pkg/$DIST.tar.gz && rm -rf $TARGET/pkg/$DIST.tar.gz
 
 for a in "static" "target/dist"; do
   for d in common $GROUP $DIST; do
