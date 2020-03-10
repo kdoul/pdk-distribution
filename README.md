@@ -8,6 +8,15 @@
 3. Add environment variabel `PDK_PATH` pointing to the unzipped folder. (Maybe not needed?)
 4. Add `$PDK_PATH/bin` to your `PATH` variabel.
 
+## Installation (MacOS)
+
+Installation requires brew package `coreutils`.
+
+For installation with brew:
+
+```bash
+brew install https://github.com/.../peppol-pdk.rb
+```
 
 
 ## Choices

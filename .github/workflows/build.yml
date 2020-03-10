@@ -138,6 +138,12 @@ jobs:
     - name: Build tar.gz
       run: make package-macos64-zip
 
+    - name: Build app
+      run: make package-macos64-app
+
+    - name: Build brew formula
+      run: make package-macos64-brew
+
     - name: List packages
       run: ls -lh target/pkg
 
@@ -150,6 +156,26 @@ jobs:
         file: target/pkg/macos64.tar.gz
         name: pdk-macos64-${TAG}.tar.gz
         label: MacOS Package (64-bit)
+
+    - name: Upload app
+      uses: klakegg/github-upload@v0.9.1
+      if: startsWith(github.ref, 'refs/tags/')
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        file: target/pkg/macos64.app.tar.gz
+        name: pdk-macos64-${TAG}.app.tar.gz
+        label: MacOS App Package (64-bit)
+
+    - name: Upload brew formula
+      uses: klakegg/github-upload@v0.9.1
+      if: startsWith(github.ref, 'refs/tags/')
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        file: target/pkg/peppol-pdk.rb
+        name: target/pkg/peppol-pdk.rb
+        label: MacOS Brew Formula (64-bit)
 
 
   win32:

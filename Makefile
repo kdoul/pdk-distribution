@@ -26,7 +26,7 @@ package: package-linux64 package-macos64 package-win32 package-win64
 
 package-linux64: package-linux64-zip package-linux64-deb package-linux64-rpm
 
-package-macos64: package-macos64-zip
+package-macos64: package-macos64-zip package-macos64-app package-macos64-brew
 
 package-win32: package-win32-zip package-win32-wix
 
@@ -43,6 +43,12 @@ package-linux64-rpm:
 
 package-macos64-zip:
 	@sh scripts/package-tar.sh macos64 nix
+
+package-macos64-app:
+	@sh scripts/package-macapp.sh
+
+package-macos64-brew:
+	@sh scripts/package-brew.sh
 
 package-win32-zip:
 	@sh scripts/package-zip.sh win32 win
