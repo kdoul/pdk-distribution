@@ -1,9 +1,11 @@
-FROM alpine:3.11 AS base
+FROM scratch AS base
 
 ADD target/pkg/linux64.tar.gz /linux64
 
 
 FROM debian:10.2-slim
+
+ENV PDK_PATH="/usr/lib/peppol/pdk"
 
 RUN apt update \
  && apt install -y git zip unzip curl bash bash-completion \

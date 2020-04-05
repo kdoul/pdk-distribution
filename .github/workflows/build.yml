@@ -174,7 +174,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         file: target/pkg/peppol-pdk.rb
-        name: target/pkg/peppol-pdk.rb
+        name: peppol-pdk.rb
         label: MacOS Brew Formula (64-bit)
 
 

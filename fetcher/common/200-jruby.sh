@@ -19,3 +19,4 @@ mv $DIST/lib/jruby-${VERSION} $DIST/lib/jruby
 bin=$DIST/lib/jruby/bin
 $bin/jruby $bin/jgem install highline
 $bin/jruby $bin/jgem install slop
+$bin/jruby $bin/jgem install nokogiri
