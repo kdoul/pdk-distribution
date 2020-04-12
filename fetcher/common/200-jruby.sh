@@ -4,7 +4,7 @@ set -e
 set -u
 
 
-VERSION=${JRUBY_VERSION:-"9.2.9.0"}
+VERSION=${JRUBY_VERSION:-"9.2.11.1"}
 
 mkdir -p $DIST/lib
 
@@ -17,6 +17,6 @@ unzip -qo $TMP/jruby-dist-${VERSION}-bin.zip -d $DIST/lib
 mv $DIST/lib/jruby-${VERSION} $DIST/lib/jruby
 
 bin=$DIST/lib/jruby/bin
-$bin/jruby $bin/jgem install highline
-$bin/jruby $bin/jgem install slop
-$bin/jruby $bin/jgem install nokogiri
+$bin/jruby $bin/jgem install highline --no-document
+$bin/jruby $bin/jgem install slop --no-document
+$bin/jruby $bin/jgem install nokogiri --no-document

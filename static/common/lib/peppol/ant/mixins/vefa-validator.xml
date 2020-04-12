@@ -9,7 +9,6 @@
         <attribute name="scope" default=""/>
         <attribute name="target" default="target/validator"/>
 
-
         <sequential>
             <java 
                 classname="no.difi.vefa.validator.dist.Cli"
