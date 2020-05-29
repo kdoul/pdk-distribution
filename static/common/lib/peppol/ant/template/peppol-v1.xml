@@ -86,7 +86,31 @@
     -->
     <target name="site" depends="site-pre,site-perform,site-post"/>
     <target name="site-pre"/>
-    <target name="site-perform"/>
+    <target name="site-perform">
+        <available file="${targetDir}/hugo" property="present"/>
+        <exec
+            executable="${env.PDK_PATH}/lib/hugo/hugo"
+            failonerror="true"
+            osfamily="unix"
+            if:true="present">
+            <arg value="-s"/>
+            <arg value="${targetDir}/hugo"/>
+            <arg value="-d"/>
+            <arg value="${targetDir}/site"/>
+            <arg value="--minify"/>
+        </exec>
+        <exec
+            executable="${env.PDK_PATH}\lib\hugo\hugo.exe"
+            failonerror="true"
+            osfamily="windows"
+            if:true="present">
+            <arg value="-s"/>
+            <arg value="${targetDir}/hugo"/>
+            <arg value="-d"/>
+            <arg value="${targetDir}/site"/>
+            <arg value="--minify"/>
+        </exec>
+    </target>
     <target name="site-post"/>
 
     <!-- 

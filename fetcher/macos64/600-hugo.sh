@@ -4,12 +4,12 @@ set -e
 set -u
 
 
-VERSION=${HUGO_VERSION:-"0.64.1"}
+VERSION=${HUGO_VERSION:-"0.71.1"}
 
 # MacOS
-mkdir -p $DIST/bin
+mkdir -p $DIST/lib/hugo
 
 download hugo_${VERSION}_macOS-64bit.tar.gz \
   https://github.com/gohugoio/hugo/releases/download/v${VERSION}/hugo_${VERSION}_macOS-64bit.tar.gz
 
-tar xzf $TMP/hugo_${VERSION}_macOS-64bit.tar.gz -C $DIST/bin hugo
+tar xzf $TMP/hugo_${VERSION}_macOS-64bit.tar.gz -C $DIST/lib/hugo
