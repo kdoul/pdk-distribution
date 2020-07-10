@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Variables to be used by fetchers
-PROJECT=$(dirname $(dirname "$0"))
+PROJECT=$(_project)
 TARGET=$PROJECT/target
 TMP=$PROJECT/tmp
 DIST=$TARGET/dist/$1

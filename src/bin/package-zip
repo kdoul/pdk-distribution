@@ -3,7 +3,7 @@
 set -e
 set -u
 
-PROJECT=$(pwd) # Yes, hack!
+PROJECT=$(_project)
 TARGET=$PROJECT/target
 DIST=$1
 GROUP=$2
@@ -11,7 +11,7 @@ GROUP=$2
 echo "--- Package $DIST"
 
 mkdir -p $TARGET/pkg
-test -e $TARGET/pkg/$DIST.tar.gz && rm -rf $TARGET/pkg/$DIST.tar.gz
+test -e $TARGET/pkg/$DIST.zip && rm -rf $TARGET/pkg/$DIST.zip
 
 for a in "static" "target/dist"; do
   for d in common $GROUP $DIST; do
@@ -22,11 +22,9 @@ for a in "static" "target/dist"; do
         chmod a+x bin/*
       fi
 
-      tar rf $TARGET/pkg/$DIST.tar *
+      zip -q9r $TARGET/pkg/$DIST.zip *
     fi
   done
 done
-
-gzip -9 $TARGET/pkg/$DIST.tar
 
 echo

@@ -13,4 +13,4 @@ cat spec-script.sh >> rpmbuild/SPECS/pdk.spec
 # Build
 rpmbuild --target X86_64 -bb rpmbuild/SPECS/pdk.spec
 
-mv $(find rpmbuild/RPMS/ -name *.rpm | head -1) linux64.rpm
+mv $(find rpmbuild/RPMS/ -name *.rpm | head -1) linux-amd64.rpm

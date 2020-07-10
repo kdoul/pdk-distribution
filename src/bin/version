@@ -3,7 +3,7 @@
 set -e
 set -u
 
-PROJECT=$(pwd) # Yes, hack!
+PROJECT=$(_project)
 
 mkdir -p $PROJECT/target/dist/common/lib/peppol
 

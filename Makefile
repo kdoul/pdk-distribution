@@ -1,3 +1,6 @@
+PROJECT=$(shell pwd)
+PATH=$(PROJECT)/src/bin:$(shell echo $$PATH)
+
 default: prepare package
 
 prepare: clean fetch version
@@ -5,62 +8,62 @@ prepare: clean fetch version
 clean:
 	@rm -rf target
 
-fetch: fetch-linux64 fetch-macos64 fetch-win32 fetch-win64
+fetch: fetch-linux-amd64 fetch-macos-amd64 fetch-win32 fetch-win64
 
-fetch-linux64:
-	@sh scripts/fetch.sh linux64 nix
+fetch-linux-amd64:
+	@fetch linux-amd64 linux nix
 
-fetch-macos64:
-	@sh scripts/fetch.sh macos64 nix
+fetch-macos-amd64:
+	@fetch macos-amd64 macos nix
 
 fetch-win32:
-	@sh scripts/fetch.sh win32 win
+	@fetch win32 win
 
 fetch-win64:
-	@sh scripts/fetch.sh win64 win
+	@fetch win64 win
 
 version:
-	@sh scripts/version.sh
+	@version
 
-package: package-linux64 package-macos64 package-win32 package-win64
+package: package-linux-amd64 package-macos-amd64 package-win32 package-win64
 
-package-linux64: package-linux64-zip package-linux64-deb package-linux64-rpm
+package-linux-amd64: package-linux-amd64-tar package-linux-amd64-deb package-linux-amd64-rpm
 
-package-macos64: package-macos64-zip package-macos64-app package-macos64-brew
+package-macos-amd64: package-macos-amd64-tar package-macos-amd64-app package-macos-amd64-brew
 
 package-win32: package-win32-zip package-win32-wix
 
 package-win64: package-win64-zip package-win64-wix
 
-package-linux64-zip:
-	@sh scripts/package-tar.sh linux64 nix
+package-linux-amd64-tar:
+	@package-tar linux-amd64 linux nix
 
-package-linux64-deb:
-	@sh scripts/package-deb.sh
+package-linux-amd64-deb:
+	@package-deb
 
-package-linux64-rpm:
-	@sh scripts/package-rpm.sh
+package-linux-amd64-rpm:
+	@package-rpm
 
-package-macos64-zip:
-	@sh scripts/package-tar.sh macos64 nix
+package-macos-amd64-tar:
+	@package-tar macos-amd64 macos nix
 
-package-macos64-app:
-	@sh scripts/package-macapp.sh
+package-macos-amd64-app:
+	@package-macapp
 
-package-macos64-brew:
-	@sh scripts/package-brew.sh
+package-macos-amd64-brew:
+	@package-brew
 
 package-win32-zip:
-	@sh scripts/package-zip.sh win32 win
+	@package-zip win32 win
 
 package-win32-wix:
-	@sh scripts/package-wix32.sh
+	@package-wix32
 
 package-win64-zip:
-	@sh scripts/package-zip.sh win64 win
+	@package-zip win64 win
 
 package-win64-wix:
-	@sh scripts/package-wix64.sh
+	@package-wix64
 
 docker:
 	@docker build -t openpeppol/pdk:dev .

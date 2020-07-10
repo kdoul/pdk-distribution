@@ -3,13 +3,13 @@
 set -e
 set -u
 
-PROJECT=$(pwd) # Yes, hack!
+PROJECT=$(_project)
 TARGET=$PROJECT/target
 
 echo "--- Package app"
 
 # Clean
-test -e $TARGET/pkg/macos64.app.tar.gz && rm -rf $TARGET/macos64.app.tar.gz
+test -e $TARGET/pkg/macos-amd64.app.tar.gz && rm -rf $TARGET/macos-amd64.app.tar.gz
 test -e $TARGET/pkg-macapp && $TARGET/pkg-macapp
 
 # Prepare folders
@@ -23,10 +23,10 @@ sh $PROJECT/package/macapp/Info.plist.sh > $TARGET/pkg-macapp/pdk.app/Contents/I
 
 # Extract project
 touch $TARGET/pkg-macapp/pdk.app/Contents/MacOS/libjli.dylib
-tar -zxf $TARGET/pkg/macos64.tar.gz -C $TARGET/pkg-macapp/pdk.app/Contents/Home
+tar -zxf $TARGET/pkg/macos-amd64.tar.gz -C $TARGET/pkg-macapp/pdk.app/Contents/Home
 
 # Package
 cd $TARGET/pkg-macapp/
-tar -czf $TARGET/pkg/macos64.app.tar.gz *
+tar -czf $TARGET/pkg/macos-amd64.app.tar.gz *
 
 echo

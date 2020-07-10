@@ -3,7 +3,7 @@
 set -e
 set -u
 
-PROJECT=$(pwd) # Yes, hack!
+PROJECT=$(_project)
 TARGET=$PROJECT/target
 
 echo "--- Package wix"

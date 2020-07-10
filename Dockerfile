@@ -1,6 +1,6 @@
 FROM scratch AS base
 
-ADD target/pkg/linux64.tar.gz /linux64
+ADD target/pkg/linux-amd64.tar.gz /linux64
 
 
 FROM debian:10.2-slim

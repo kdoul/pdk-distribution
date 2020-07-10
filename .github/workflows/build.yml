@@ -49,16 +49,16 @@ jobs:
 #        key: libs
 
     - name: Prepare files
-      run: make clean fetch-linux64 version
+      run: make clean fetch-linux-amd64 version
 
     - name: Build tar.gz
-      run: make package-linux64-zip
+      run: make package-linux-amd64-tar
 
     - name: Build Debian package
-      run: make package-linux64-deb
+      run: make package-linux-amd64-deb
 
     - name: Build RPM package
-      run: make package-linux64-rpm
+      run: make package-linux-amd64-rpm
 
     - name: List packages
       run: ls -lh target/pkg
@@ -72,9 +72,9 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        file: target/pkg/linux64.tar.gz
-        name: pdk-linux64-${TAG}.tar.gz
-        label: Linux Package (64-bit)
+        file: target/pkg/linux-amd64.tar.gz
+        name: pdk-linux-amd64-${TAG}.tar.gz
+        label: Linux Package (amd64)
 
     - name: Upload Debian package
       uses: klakegg/github-upload@v0.9.1
@@ -82,9 +82,9 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        file: target/pkg/linux64.deb
-        name: pdk-linux64-${TAG}.deb
-        label: Linux DEB Package (64-bit)
+        file: target/pkg/linux-amd64.deb
+        name: pdk-linux-amd64-${TAG}.deb
+        label: Linux DEB Package (amd64)
 
     - name: Upload RPM package
       uses: klakegg/github-upload@v0.9.1
@@ -92,9 +92,9 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        file: target/pkg/linux64.rpm
-        name: pdk-linux64-${TAG}.rpm
-        label: Linux RPM Package (64-bit)
+        file: target/pkg/linux-amd64.rpm
+        name: pdk-linux-amd64-${TAG}.rpm
+        label: Linux RPM Package (amd64)
 
     - name: Push edge image
       env:
@@ -133,16 +133,16 @@ jobs:
         path: target/dist/common/lib/peppol/version
 
     - name: Prepare files
-      run: make clean fetch-macos64 version
+      run: make clean fetch-macos-amd64 version
 
     - name: Build tar.gz
-      run: make package-macos64-zip
+      run: make package-macos-amd64-zip
 
     - name: Build app
-      run: make package-macos64-app
+      run: make package-macos-amd64-app
 
     - name: Build brew formula
-      run: make package-macos64-brew
+      run: make package-macos-amd64-brew
 
     - name: List packages
       run: ls -lh target/pkg
@@ -153,9 +153,9 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        file: target/pkg/macos64.tar.gz
-        name: pdk-macos64-${TAG}.tar.gz
-        label: MacOS Package (64-bit)
+        file: target/pkg/macos-amd64.tar.gz
+        name: pdk-macos-amd64-${TAG}.tar.gz
+        label: MacOS Package (amd64)
 
     - name: Upload app
       uses: klakegg/github-upload@v0.9.1
@@ -163,9 +163,9 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        file: target/pkg/macos64.app.tar.gz
-        name: pdk-macos64-${TAG}.app.tar.gz
-        label: MacOS App Package (64-bit)
+        file: target/pkg/macos-amd64.app.tar.gz
+        name: pdk-macos-amd64-${TAG}.app.tar.gz
+        label: MacOS App Package (amd64)
 
     - name: Upload brew formula
       uses: klakegg/github-upload@v0.9.1
@@ -175,7 +175,7 @@ jobs:
       with:
         file: target/pkg/peppol-pdk.rb
         name: peppol-pdk.rb
-        label: MacOS Brew Formula (64-bit)
+        label: MacOS Brew Formula (amd64)
 
 
   win32:
