@@ -3,7 +3,7 @@ class PeppolPdk < Formula
   version "${VERSION}"
   homepage "https://peppol.eu/"
 
-  url "https://github.com/${GITHUB_REPOSITORY}/releases/download/${VERSION}/pdk-macos64-${VERSION}.tar.gz"
+  url "https://github.com/${GITHUB_REPOSITORY}/releases/download/${VERSION}/pdk-macos-amd64-${VERSION}.tar.gz"
   sha256 "${CHECKSUM}"
 
   depends_on "coreutils"

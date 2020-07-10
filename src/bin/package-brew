@@ -12,7 +12,7 @@ echo "--- Package brew"
 test -e $TARGET/pkg/macos64.brew.rb && rm -rf $TARGET/pkg/macos64.brew.rb
 
 # Calculate checksum for package
-export CHECKSUM=$(sha256sum $TARGET/pkg/macos64.tar.gz | cut -d ' ' -f 1)
+export CHECKSUM=$(sha256sum $TARGET/pkg/macos-amd64.tar.gz | cut -d ' ' -f 1)
 
 # Fetch version
 export VERSION=$(cat $TARGET/dist/common/lib/peppol/version | cut -d '/'  -f 1)

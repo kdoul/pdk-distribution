@@ -7,4 +7,4 @@ sh control.sh > debian/DEBIAN/control
 mv package debian/usr/lib/peppol/pdk
 ln -s /usr/lib/peppol/pdk/bin/pdk debian/usr/bin/pdk
 
-fakeroot dpkg-deb --build debian linux64.deb
+fakeroot dpkg-deb --build debian linux-amd64.deb

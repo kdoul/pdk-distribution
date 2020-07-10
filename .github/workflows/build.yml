@@ -136,7 +136,7 @@ jobs:
       run: make clean fetch-macos-amd64 version
 
     - name: Build tar.gz
-      run: make package-macos-amd64-zip
+      run: make package-macos-amd64-tar
 
     - name: Build app
       run: make package-macos-amd64-app

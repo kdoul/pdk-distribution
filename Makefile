@@ -67,3 +67,7 @@ package-win64-wix:
 
 docker:
 	@docker build -t openpeppol/pdk:dev .
+
+
+linux-amd64: fetch-linux-amd64 version package-linux-amd64-tar package-linux-amd64-deb package-linux-amd64-rpm
+macos-amd64: fetch-macos-amd64 version package-macos-amd64-tar
