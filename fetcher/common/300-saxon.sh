@@ -4,7 +4,7 @@ set -e
 set -u
 
 
-VERSION=${SAXON_VERSION:-"9.9.1-6"}
+VERSION=${SAXON_VERSION:-"9.9.1-7"}
 
 mkdir -p $DIST/lib/saxon
 

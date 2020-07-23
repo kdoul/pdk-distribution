@@ -3,6 +3,7 @@
 set -e
 set -u
 
+# TODO Change to OpenPeppol implementation
 
 VERSION=${XSDCHECKER_VERSION:-"1.0.3"}
 

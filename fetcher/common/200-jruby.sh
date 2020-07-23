@@ -4,7 +4,7 @@ set -e
 set -u
 
 
-VERSION=${JRUBY_VERSION:-"9.2.11.1"}
+VERSION=${JRUBY_VERSION:-"9.2.12.0"}
 
 mkdir -p $DIST/lib
 
