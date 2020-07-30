@@ -49,6 +49,8 @@ jobs:
 #        key: libs
 
     - name: Prepare files
+      env:
+        GITHUB_TOKEN: ${{ secrets.SUDO_GITHUB_TOKEN }}
       run: make clean fetch-linux-amd64 version
 
     - name: Build tar.gz
@@ -133,6 +135,8 @@ jobs:
         path: target/dist/common/lib/peppol/version
 
     - name: Prepare files
+      env:
+        GITHUB_TOKEN: ${{ secrets.SUDO_GITHUB_TOKEN }}
       run: make clean fetch-macos-amd64 version
 
     - name: Build tar.gz
@@ -194,6 +198,8 @@ jobs:
         path: target/dist/common/lib/peppol/version
 
     - name: Prepare files
+      env:
+        GITHUB_TOKEN: ${{ secrets.SUDO_GITHUB_TOKEN }}
       run: make clean fetch-win32 version
 
     - name: Build zip
@@ -242,6 +248,8 @@ jobs:
         path: target/dist/common/lib/peppol/version
 
     - name: Prepare files
+      env:
+        GITHUB_TOKEN: ${{ secrets.SUDO_GITHUB_TOKEN }}
       run: make clean fetch-win64 version
 
     - name: Build zip
