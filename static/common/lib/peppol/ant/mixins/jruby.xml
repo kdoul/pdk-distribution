@@ -9,9 +9,22 @@
         <attribute name="args" default="-h"/>
 
         <sequential>
-            <exec executable="${env.PDK_PATH}/bin/jruby">
+            <apply
+                executable="${env.PDK_PATH}/lib/jruby/bin/jruby.bat"
+                failonerror="true"
+                osfamily="windows">
                 <arg line="@{args}"/>
-            </exec>
+            </apply>
+            <apply
+                executable="${env.PDK_PATH}/lib/jruby/bin/jruby"
+                failonerror="true"
+                osfamily="unix">
+                <arg line="@{args}"/>
+            </apply>
+
+            <!-- <exec executable="${env.PDK_PATH}/bin/jruby">
+                <arg line="@{args}"/>
+            </exec> -->
         </sequential>
     </macrodef>
 

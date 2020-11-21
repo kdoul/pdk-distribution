@@ -9,7 +9,11 @@ RUN apt update \
  && apt install -y git zip unzip curl bash bash-completion make \
  && rm -rf /var/lib/apt/lists/* \
  && mkdir -p /src \
- && ln -s /usr/lib/peppol/pdk/bin/pdk /usr/bin/pdk
+ && ln -s /usr/lib/peppol/pdk/bin/pdk /usr/bin/pdk \
+ && ln -s /usr/lib/peppol/pdk/lib/jruby/bin/jruby /usr/bin/jruby
+
+ENV PDK_PATH=/usr/lib/peppol/pdk \
+    JAVA_HOME=/usr/lib/peppol/pdk/lib/corretto
 
 ADD package/docker /
 

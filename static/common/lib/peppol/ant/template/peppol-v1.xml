@@ -11,7 +11,7 @@
 
     <!-- Include mixins -->
     <import file="../mixins/asciidoctor.xml"/>
-    <import file="../mixins/jruby.xml"/>
+    <!-- <import file="../mixins/jruby.xml"/> -->
     <import file="../mixins/saxon.xml"/>
     <import file="../mixins/vefa-structure.xml"/>
     <import file="../mixins/vefa-validator.xml"/>

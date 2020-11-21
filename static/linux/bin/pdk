@@ -4,4 +4,4 @@ export PDK_PATH=$(dirname $(dirname $(readlink -nf "$0")))
 export JAVA_HOME=$PDK_PATH/lib/corretto
 export SAXON_HOME=$PDK_PATH/lib/saxon
 
-exec $PDK_PATH/lib/jruby/bin/jruby $PDK_PATH/lib/peppol/shell/main.rb $@
+exec $PDK_PATH/lib/jruby/bin/jruby $PDK_PATH/lib/jruby/bin/pdk $@
