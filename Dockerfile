@@ -6,7 +6,7 @@ ADD target/pkg/linux-amd64.tar.gz /linux64
 FROM debian:10.2-slim
 
 ENV PDK_PATH=/usr/lib/peppol/pdk \
-    JAVA_HOME=/usr/lib/peppol/pdk/lib/corretto
+    JAVA_HOME=/usr/lib/peppol/pdk/lib/adoptopenjdk
 
 RUN apt update \
  && apt install -y git zip unzip curl bash bash-completion make \

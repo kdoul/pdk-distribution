@@ -29,6 +29,8 @@ rm -rf $TARGET/pkg-wix/package64/lib/jruby/lib/jni/*BSD
 # Make sure folder is writable for non-root user in wix container.
 chmod 777 $TARGET/pkg-wix
 
+ruby package/wix/PDK.wxs.rb $TARGET/pkg-wix package64 64 > $TARGET/pkg-wix/win64.wxs
+
 # Perform build
 docker run --rm -i \
   -v $TARGET/pkg-wix:/work \
