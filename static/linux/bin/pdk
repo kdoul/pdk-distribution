@@ -1,7 +1,7 @@
 #!/bin/sh
 
 export PDK_PATH=$(dirname $(dirname $(readlink -nf "$0")))
-export JAVA_HOME=$PDK_PATH/lib/corretto
+export JAVA_HOME=$PDK_PATH/lib/adaptopenjdk
 export SAXON_HOME=$PDK_PATH/lib/saxon
 
 exec $PDK_PATH/lib/jruby/bin/jruby $PDK_PATH/lib/jruby/bin/pdk $@

@@ -20,8 +20,8 @@ download() {
 
 # Run fetchers
 for arch in $@ common; do
-  if [ -e $PROJECT/fetcher/$arch ] && [ $(find $PROJECT/fetcher/$arch -name *.sh | wc -l) != "0" ]; then
-    for fetcher in $(ls $PROJECT/fetcher/$arch/*.sh); do
+  if [ -e $PROJECT/src/fetcher/$arch ] && [ $(find $PROJECT/src/fetcher/$arch -name *.sh | wc -l) != "0" ]; then
+    for fetcher in $(ls $PROJECT/src/fetcher/$arch/*.sh); do
       name=$(echo $fetcher | sed 's:\.sh$::')
 
       echo "--- Running $name"
