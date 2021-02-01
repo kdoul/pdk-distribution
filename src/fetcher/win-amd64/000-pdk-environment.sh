@@ -4,7 +4,7 @@ set -e
 set -u
 
 
-VERSION=${PDKENV_VERSION:-20201229}
+VERSION=${PDKENV_VERSION:-20210201}
 
 # Download
 download pdk-environment-win-amd64-${VERSION}.zip \
