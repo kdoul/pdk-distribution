@@ -4,7 +4,7 @@ set -e
 set -u
 
 
-VERSION=${PDKENV_VERSION:-20210224}
+VERSION=${PDKENV_VERSION:-20210502}
 
 # Download
 download pdk-environment-linux-amd64-${VERSION}.tar.gz \
