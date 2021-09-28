@@ -8,5 +8,5 @@ set -u
 bin=$DIST/lib/jruby/bin
 $bin/jruby $bin/jgem install \
   --no-document \
-  --source "https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@rubygems.pkg.github.com/k15g-openpeppol" \
+  --source "https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@rubygems.pkg.github.com/openpeppol" \
   pdk-utils

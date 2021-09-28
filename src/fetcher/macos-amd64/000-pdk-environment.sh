@@ -4,11 +4,11 @@ set -e
 set -u
 
 
-VERSION=${PDKENV_VERSION:-20210502}
+VERSION=${PDKENV_VERSION:-1.0.0}
 
 # Download
 download pdk-environment-macos-amd64-${VERSION}.tar.gz \
-  https://github.com/k15g-openpeppol/pdk-environment/releases/download/${VERSION}/pdk-environment-macos-amd64-${VERSION}.tar.gz
+  https://github.com/openpeppol/pdk-environment/releases/download/v${VERSION}/pdk-environment-macos-amd64-${VERSION}.tar.gz
 
 # Prepare folder
 mkdir -p $DIST
