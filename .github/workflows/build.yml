@@ -5,7 +5,7 @@ on:
     branches:
       - master
   release:
-    types: 
+    types:
       - published
 
 jobs:
@@ -14,17 +14,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v1
 
-    - name: Create version file
-      run: make version
+      - name: Create version file
+        run: make version
 
-    - name: Store version file
-      uses: actions/upload-artifact@v1
-      with:
-        name: version
-        path: target/dist/common/lib/peppol/version
+      - name: Store version file
+        uses: actions/upload-artifact@v1
+        with:
+          name: version
+          path: target/dist/common/lib/peppol/version
 
   linux64:
     name: Linux (amd64)
@@ -32,86 +32,87 @@ jobs:
     needs: init
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v1
 
-    - name: Fetch version file
-      uses: actions/download-artifact@v1
-      with:
-        name: version
-        path: target/dist/common/lib/peppol/version
+      - name: Prepare version labels
+        uses: k15g/action-version-labels@v1
+        with:
+          prefix: project
 
-    - name: Prepare files
-      env:
-        GITHUB_USERNAME: ${{ secrets.SUDO_GITHUB_USERNAME }}
-        GITHUB_TOKEN: ${{ secrets.SUDO_GITHUB_TOKEN }}
-      run: make clean fetch-linux-amd64 version
+      - name: Fetch version file
+        uses: actions/download-artifact@v1
+        with:
+          name: version
+          path: target/dist/common/lib/peppol/version
 
-    - name: Build tar.gz
-      run: make package-linux-amd64-tar
+      - name: Prepare files
+        env:
+          GITHUB_USERNAME: ${{ secrets.SUDO_GITHUB_USERNAME }}
+          GITHUB_TOKEN: ${{ secrets.SUDO_GITHUB_TOKEN }}
+        run: make clean fetch-linux-amd64 version
 
-    - name: Build Debian package
-      run: make package-linux-amd64-deb
+      - name: Build tar.gz
+        run: make package-linux-amd64-tar
 
-    - name: Build RPM package
-      run: make package-linux-amd64-rpm
+      - name: Build Debian package
+        run: make package-linux-amd64-deb
 
-    - name: List packages
-      run: ls -lh target/pkg
+      - name: Build RPM package
+        run: make package-linux-amd64-rpm
 
-    - name: Build Docker image
-      run: make docker
+      - name: List packages
+        run: ls -lh target/pkg
 
-    - name: Upload tar.gz
-      uses: klakegg/github-upload@v0.9.1
-      if: startsWith(github.ref, 'refs/tags/')
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        file: target/pkg/linux-amd64.tar.gz
-        name: pdk-linux-amd64-${TAG}.tar.gz
-        label: Linux Package (amd64)
+      - name: Build Docker image
+        run: make docker
 
-    - name: Upload Debian package
-      uses: klakegg/github-upload@v0.9.1
-      if: startsWith(github.ref, 'refs/tags/')
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        file: target/pkg/linux-amd64.deb
-        name: pdk-linux-amd64-${TAG}.deb
-        label: Linux DEB Package (amd64)
+      - name: Upload tar.gz
+        uses: k15g/action-github-asset-upload@v1
+        if: startsWith(github.ref, 'refs/tags/v')
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          file: target/pkg/linux-amd64.tar.gz
+          name: pdk-linux-amd64-${{ env.PROJECT_VERSION }}.tar.gz
+          label: Linux Package (amd64)
 
-    - name: Upload RPM package
-      uses: klakegg/github-upload@v0.9.1
-      if: startsWith(github.ref, 'refs/tags/')
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        file: target/pkg/linux-amd64.rpm
-        name: pdk-linux-amd64-${TAG}.rpm
-        label: Linux RPM Package (amd64)
+      - name: Upload Debian package
+        uses: k15g/action-github-asset-upload@v1
+        if: startsWith(github.ref, 'refs/tags/v')
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          file: target/pkg/linux-amd64.deb
+          name: pdk-linux-amd64-${{ env.PROJECT_VERSION }}.deb
+          label: Linux DEB Package (amd64)
 
-    - name: Push edge image
-      env:
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
-      run: |
-        docker login -u ${DOCKER_USERNAME} -p ${DOCKER_TOKEN}
-        docker tag openpeppol/pdk:dev klakegg/pdk:edge
-        docker push klakegg/pdk:edge
+      - name: Upload RPM package
+        uses: k15g/action-github-asset-upload@v1
+        if: startsWith(github.ref, 'refs/tags/v')
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          file: target/pkg/linux-amd64.rpm
+          name: pdk-linux-amd64-${{ env.PROJECT_VERSION }}.rpm
+          label: Linux RPM Package (amd64)
 
-    - name: Push tagged image
-      if: startsWith(github.ref, 'refs/tags/')
-      env:
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
-      run: |
-        TAG=$(echo $GITHUB_REF | sed "s:.*/::g")
-        docker login -u ${DOCKER_USERNAME} -p ${DOCKER_TOKEN}
-        docker tag openpeppol/pdk:dev klakegg/pdk:$TAG
-        docker push klakegg/pdk:$TAG
+      - name: Push edge image
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+        run: |
+          docker login -u ${DOCKER_USERNAME} -p ${DOCKER_TOKEN}
+          docker tag openpeppol/pdk:dev klakegg/pdk:edge
+          docker push klakegg/pdk:edge
 
+      - name: Push tagged image
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+        run: |
+          TAG=$(echo $GITHUB_REF | sed "s:.*/::g")
+          docker login -u ${DOCKER_USERNAME} -p ${DOCKER_TOKEN}
+          docker tag openpeppol/pdk:dev klakegg/pdk:$TAG
+          docker push klakegg/pdk:$TAG
 
   macos64:
     name: MacOS (amd64)
@@ -119,63 +120,64 @@ jobs:
     needs: init
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v1
 
-    - name: Fetch version file
-      uses: actions/download-artifact@v1
-      with:
-        name: version
-        path: target/dist/common/lib/peppol/version
+      - name: Prepare version labels
+        uses: k15g/action-version-labels@v1
+        with:
+          prefix: project
 
-    - name: Prepare files
-      env:
-        GITHUB_USERNAME: ${{ secrets.SUDO_GITHUB_USERNAME }}
-        GITHUB_TOKEN: ${{ secrets.SUDO_GITHUB_TOKEN }}
-      run: make clean fetch-macos-amd64 version
+      - name: Fetch version file
+        uses: actions/download-artifact@v1
+        with:
+          name: version
+          path: target/dist/common/lib/peppol/version
 
-    - name: Build tar.gz
-      run: make package-macos-amd64-tar
+      - name: Prepare files
+        env:
+          GITHUB_USERNAME: ${{ secrets.SUDO_GITHUB_USERNAME }}
+          GITHUB_TOKEN: ${{ secrets.SUDO_GITHUB_TOKEN }}
+        run: make clean fetch-macos-amd64 version
 
-    - name: Build app
-      run: make package-macos-amd64-app
+      - name: Build tar.gz
+        run: make package-macos-amd64-tar
 
-    - name: Build brew formula
-      run: make package-macos-amd64-brew
+      - name: Build app
+        run: make package-macos-amd64-app
 
-    - name: List packages
-      run: ls -lh target/pkg
+      - name: Build brew formula
+        run: make package-macos-amd64-brew
 
-    - name: Upload tar.gz
-      uses: klakegg/github-upload@v0.9.1
-      if: startsWith(github.ref, 'refs/tags/')
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        file: target/pkg/macos-amd64.tar.gz
-        name: pdk-macos-amd64-${TAG}.tar.gz
-        label: MacOS Package (amd64)
+      - name: List packages
+        run: ls -lh target/pkg
 
-    - name: Upload app
-      uses: klakegg/github-upload@v0.9.1
-      if: startsWith(github.ref, 'refs/tags/')
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        file: target/pkg/macos-amd64.app.tar.gz
-        name: pdk-macos-amd64-${TAG}.app.tar.gz
-        label: MacOS App Package (amd64)
+      - name: Upload tar.gz
+        uses: k15g/action-github-asset-upload@v1
+        if: startsWith(github.ref, 'refs/tags/v')
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          file: target/pkg/macos-amd64.tar.gz
+          name: pdk-macos-amd64-${{ env.PROJECT_VERSION }}.tar.gz
+          label: MacOS Package (amd64)
 
-    - name: Upload brew formula
-      uses: klakegg/github-upload@v0.9.1
-      if: startsWith(github.ref, 'refs/tags/')
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        file: target/pkg/peppol-pdk.rb
-        name: peppol-pdk.rb
-        label: MacOS Brew Formula (amd64)
+      - name: Upload app
+        uses: k15g/action-github-asset-upload@v1
+        if: startsWith(github.ref, 'refs/tags/v')
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          file: target/pkg/macos-amd64.app.tar.gz
+          name: pdk-macos-amd64-${{ env.PROJECT_VERSION }}.app.tar.gz
+          label: MacOS App Package (amd64)
 
+      - name: Upload brew formula
+        uses: k15g/action-github-asset-upload@v1
+        if: startsWith(github.ref, 'refs/tags/v')
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          file: target/pkg/peppol-pdk.rb
+          name: peppol-pdk.rb
+          label: MacOS Brew Formula (amd64)
 
   win64:
     name: Windows (amd64)
@@ -183,46 +185,49 @@ jobs:
     needs: init
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v1
 
-    - name: Fetch version file
-      uses: actions/download-artifact@v1
-      with:
-        name: version
-        path: target/dist/common/lib/peppol/version
+      - name: Prepare version labels
+        uses: k15g/action-version-labels@v1
+        with:
+          prefix: project
 
-    - name: Prepare files
-      env:
-        GITHUB_USERNAME: ${{ secrets.SUDO_GITHUB_USERNAME }}
-        GITHUB_TOKEN: ${{ secrets.SUDO_GITHUB_TOKEN }}
-      run: make clean fetch-win-amd64 version
+      - name: Fetch version file
+        uses: actions/download-artifact@v1
+        with:
+          name: version
+          path: target/dist/common/lib/peppol/version
 
-    - name: Build zip
-      run: make package-win-amd64-zip
+      - name: Prepare files
+        env:
+          GITHUB_USERNAME: ${{ secrets.SUDO_GITHUB_USERNAME }}
+          GITHUB_TOKEN: ${{ secrets.SUDO_GITHUB_TOKEN }}
+        run: make clean fetch-win-amd64 version
 
-    #- name: Build Windows Installer
-    #  run: make package-win-amd64-wix
+      - name: Build zip
+        run: make package-win-amd64-zip
 
-    - name: List packages
-      run: ls -lh target/pkg
+      #- name: Build Windows Installer
+      #  run: make package-win-amd64-wix
 
-    - name: Upload zip
-      uses: klakegg/github-upload@v0.9.1
-      if: startsWith(github.ref, 'refs/tags/')
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        file: target/pkg/win-amd64.zip
-        name: pdk-win-amd64-${TAG}.zip
-        label: Windows Package (64-bit)
+      - name: List packages
+        run: ls -lh target/pkg
 
-    #- name: Upload Windows Installer
-    #  uses: klakegg/github-upload@v0.9.1
-    #  if: startsWith(github.ref, 'refs/tags/')
-    #  env:
-    #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #  with:
-    #    file: target/pkg/win64.msi
-    #    name: pdk-win-amd64-${TAG}.msi
-    #    label: Windows Installer (64-bit)
+      - name: Upload zip
+        uses: k15g/action-github-asset-upload@v1
+        if: startsWith(github.ref, 'refs/tags/v')
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          file: target/pkg/win-amd64.zip
+          name: pdk-win-amd64-${{ env.PROJECT_VERSION }}.zip
+          label: Windows Package (64-bit)
+
+    #  - name: Upload Windows Installer
+    #    uses: k15g/action-github-asset-upload@v1
+    #    if: startsWith(github.ref, 'refs/tags/v')
+    #    with:
+    #      token: ${{ secrets.GITHUB_TOKEN }}
+    #      file: target/pkg/win64.msi
+    #      name: pdk-win-amd64-${{ env.PROJECT_VERSION }}.msi
+    #      label: Windows Installer (64-bit)
