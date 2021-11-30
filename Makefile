@@ -62,9 +62,20 @@ package-win-amd64-zip:
 package-win-amd64-wix:
 	@package-wix64
 
-docker:
-	@docker build -t openpeppol/pdk:dev .
+docker-build:
+	@DOCKER_CLI_EXPERIMENTAL=enabled docker buildx build \
+		--progress plain \
+		--platform linux/arm64,linux/amd64 \
+		--tag openpeppol/pdk:dev \
+		.
 
+docker-push:
+	@DOCKER_CLI_EXPERIMENTAL=enabled docker buildx build \
+		--progress plain \
+		--platform linux/arm64,linux/amd64 \
+		--tag $(tag) \
+		--push \
+		.
 
 linux-amd64: fetch-linux-amd64 version package-linux-amd64-tar package-linux-amd64-deb package-linux-amd64-rpm
 linux-arm64: fetch-linux-arm64 version package-linux-arm64-tar

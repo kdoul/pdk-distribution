@@ -1,0 +1,9 @@
+#!/bin/sh
+
+def=$(uname -m)
+
+if [ $def = "aarch64" ]; then
+    echo -n "arm64"
+elif [ $def = "x86_64" ]; then
+    echo -n "amd64"
+fi

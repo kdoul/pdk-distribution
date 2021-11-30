@@ -1,9 +1,15 @@
-FROM scratch AS base
+FROM debian:10.9-slim AS base
 
-ADD target/pkg/linux-amd64.tar.gz /linux64
+ADD src/bin/arch /tmp/arch
+ADD target/pkg /tmp/pkg
+
+RUN sh /tmp/arch
+RUN mkdir -p /linux64 && tar -zxf /tmp/pkg/linux-$(sh /tmp/arch).tar.gz -C /linux64
+
 
 
 FROM debian:10.9-slim
+ARG TARGETARCH
 
 ENV PDK_PATH=/usr/lib/peppol/pdk \
     JAVA_HOME=/usr/lib/peppol/pdk/lib/adoptopenjdk
