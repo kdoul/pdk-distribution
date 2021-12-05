@@ -21,10 +21,11 @@ jobs:
         run: make version
 
       - name: Store version file
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: version
           path: target/dist/common/lib/peppol/version
+          retention-days: 1
 
   linux:
     name: Linux

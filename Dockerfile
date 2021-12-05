@@ -15,7 +15,7 @@ ENV PDK_PATH=/usr/lib/peppol/pdk \
     JAVA_HOME=/usr/lib/peppol/pdk/lib/adoptopenjdk
 
 RUN apt update \
- && DEBIAN_FRONTEND=noninteractive apt install -y git zip unzip curl bash bash-completion make \
+ && DEBIAN_FRONTEND=noninteractive apt install -y git zip unzip curl bash bash-completion make netbase \
  && rm -rf /var/lib/apt/lists/* \
  && mkdir -p /src \
  && ln -s $PDK_PATH/bin/pdk /usr/bin/pdk \
