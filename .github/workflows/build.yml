@@ -28,7 +28,7 @@ jobs:
           retention-days: 1
 
   linux:
-    name: Linux
+    name: Linux distribution
     runs-on: ubuntu-latest
     needs: init
 
@@ -79,7 +79,7 @@ jobs:
           label: Linux Package (${{ matrix.arch }})
 
   linux-deb:
-    name: Linux deb
+    name: Debian package
     runs-on: ubuntu-latest
     needs: linux
 
@@ -111,7 +111,7 @@ jobs:
           label: Linux DEB Package (${{ matrix.arch }})
 
   linux-rpm:
-    name: Linux rpm
+    name: RPM package
     runs-on: ubuntu-latest
     needs: linux
 
@@ -119,6 +119,7 @@ jobs:
       matrix:
         arch:
           - amd64
+
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -180,10 +181,15 @@ jobs:
           make docker-push tag="klakegg/pdk:${{ env.PROJECT_VERSION }}"
           make docker-push tag="klakegg/pdk:latest"
 
-  macos64:
-    name: MacOS (amd64)
+  macos:
+    name: MacOS distribution
     runs-on: ubuntu-latest
     needs: init
+
+    strategy:
+      matrix:
+        arch:
+          - amd64
 
     steps:
       - name: Checkout
@@ -204,16 +210,16 @@ jobs:
         env:
           GITHUB_USERNAME: ${{ secrets.SUDO_GITHUB_USERNAME }}
           GITHUB_TOKEN: ${{ secrets.SUDO_GITHUB_TOKEN }}
-        run: make clean fetch-macos-amd64 version
+        run: make clean fetch-macos-${{ matrix.arch }} version
 
       - name: Build tar.gz
-        run: make package-macos-amd64-tar
+        run: make package-macos-${{ matrix.arch }}-tar
 
       - name: Build app
-        run: make package-macos-amd64-app
+        run: make package-macos-${{ matrix.arch }}-app
 
       - name: Build brew formula
-        run: make package-macos-amd64-brew
+        run: make package-macos-${{ matrix.arch }}-brew
 
       - name: List packages
         run: ls -lh target/pkg
@@ -223,18 +229,18 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/v')
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          file: target/pkg/macos-amd64.tar.gz
-          name: pdk-macos-amd64-${{ env.PROJECT_VERSION }}.tar.gz
-          label: MacOS Package (amd64)
+          file: target/pkg/macos-${{ matrix.arch }}.tar.gz
+          name: pdk-macos-${{ matrix.arch }}-${{ env.PROJECT_VERSION }}.tar.gz
+          label: MacOS Package (${{ matrix.arch }})
 
       - name: Upload app
         uses: k15g/action-github-asset-upload@v1
         if: startsWith(github.ref, 'refs/tags/v')
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          file: target/pkg/macos-amd64.app.tar.gz
-          name: pdk-macos-amd64-${{ env.PROJECT_VERSION }}.app.tar.gz
-          label: MacOS App Package (amd64)
+          file: target/pkg/macos-${{ matrix.arch }}.app.tar.gz
+          name: pdk-macos-${{ matrix.arch }}-${{ env.PROJECT_VERSION }}.app.tar.gz
+          label: MacOS App Package (${{ matrix.arch }})
 
       - name: Upload brew formula
         uses: k15g/action-github-asset-upload@v1
@@ -243,12 +249,17 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           file: target/pkg/peppol-pdk.rb
           name: peppol-pdk.rb
-          label: MacOS Brew Formula (amd64)
+          label: MacOS Brew Formula
 
-  win64:
-    name: Windows (amd64)
+  windows:
+    name: Windows distribution
     runs-on: ubuntu-latest
     needs: init
+
+    strategy:
+      matrix:
+        arch:
+          - amd64
 
     steps:
       - name: Checkout
@@ -269,13 +280,13 @@ jobs:
         env:
           GITHUB_USERNAME: ${{ secrets.SUDO_GITHUB_USERNAME }}
           GITHUB_TOKEN: ${{ secrets.SUDO_GITHUB_TOKEN }}
-        run: make clean fetch-win-amd64 version
+        run: make clean fetch-win-${{ matrix.arch }} version
 
       - name: Build zip
-        run: make package-win-amd64-zip
+        run: make package-win-${{ matrix.arch }}-zip
 
       #- name: Build Windows Installer
-      #  run: make package-win-amd64-wix
+      #  run: make package-win-${{ matrix.arch }}-wix
 
       - name: List packages
         run: ls -lh target/pkg
@@ -285,9 +296,9 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/v')
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          file: target/pkg/win-amd64.zip
-          name: pdk-win-amd64-${{ env.PROJECT_VERSION }}.zip
-          label: Windows Package (64-bit)
+          file: target/pkg/win-${{ matrix.arch }}.zip
+          name: pdk-win-${{ matrix.arch }}-${{ env.PROJECT_VERSION }}.zip
+          label: Windows Package (${{ matrix.arch }})
 
     #  - name: Upload Windows Installer
     #    uses: k15g/action-github-asset-upload@v1
@@ -295,5 +306,5 @@ jobs:
     #    with:
     #      token: ${{ secrets.GITHUB_TOKEN }}
     #      file: target/pkg/win64.msi
-    #      name: pdk-win-amd64-${{ env.PROJECT_VERSION }}.msi
-    #      label: Windows Installer (64-bit)
+    #      name: pdk-win-${{ matrix.arch }}-${{ env.PROJECT_VERSION }}.msi
+    #      label: Windows Installer (${{ matrix.arch }})
