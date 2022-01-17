@@ -4,7 +4,7 @@ set -e
 set -u
 
 
-VERSION=${PDKENV_VERSION:-1.0.0}
+VERSION=${PDKENV_VERSION:-1.1.1}
 
 # Download
 download pdk-environment-macos-amd64-${VERSION}.tar.gz \
