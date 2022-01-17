@@ -98,6 +98,17 @@ jobs:
           name: linux
           path: target/pkg
 
+      - name: Prepare version labels
+        uses: k15g/action-version-labels@v1
+        with:
+          prefix: project
+
+      - name: Fetch version file
+        uses: actions/download-artifact@v1
+        with:
+          name: version
+          path: target/dist/common/lib/peppol/version
+
       - name: Build Debian package
         run: make package-linux-${{ matrix.arch }}-deb
 
