@@ -134,6 +134,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
+      
+      - name: Prepare version labels
+        uses: k15g/action-version-labels@v1
+        with:
+          prefix: project
+
+      - name: Fetch version file
+        uses: actions/download-artifact@v1
+        with:
+          name: version
+          path: target/dist/common/lib/peppol/version
 
       - name: Download artifact
         uses: actions/download-artifact@v2
@@ -167,6 +178,17 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
+      
+      - name: Prepare version labels
+        uses: k15g/action-version-labels@v1
+        with:
+          prefix: project
+
+      - name: Fetch version file
+        uses: actions/download-artifact@v1
+        with:
+          name: version
+          path: target/dist/common/lib/peppol/version
 
       - name: Download artifact
         uses: actions/download-artifact@v2
