@@ -98,6 +98,17 @@ jobs:
           name: linux
           path: target/pkg
 
+      - name: Prepare version labels
+        uses: k15g/action-version-labels@v1
+        with:
+          prefix: project
+
+      - name: Fetch version file
+        uses: actions/download-artifact@v1
+        with:
+          name: version
+          path: target/dist/common/lib/peppol/version
+
       - name: Build Debian package
         run: make package-linux-${{ matrix.arch }}-deb
 
@@ -123,6 +134,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
+      
+      - name: Prepare version labels
+        uses: k15g/action-version-labels@v1
+        with:
+          prefix: project
+
+      - name: Fetch version file
+        uses: actions/download-artifact@v1
+        with:
+          name: version
+          path: target/dist/common/lib/peppol/version
 
       - name: Download artifact
         uses: actions/download-artifact@v2
@@ -156,6 +178,17 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
+      
+      - name: Prepare version labels
+        uses: k15g/action-version-labels@v1
+        with:
+          prefix: project
+
+      - name: Fetch version file
+        uses: actions/download-artifact@v1
+        with:
+          name: version
+          path: target/dist/common/lib/peppol/version
 
       - name: Download artifact
         uses: actions/download-artifact@v2
@@ -165,21 +198,36 @@ jobs:
 
       - name: Build Docker image
         run: make docker-build
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v1
+        
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@13d241b293754004c80624b5567555c4a39ffbe3
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_TOKEN }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+#       - name: Login to Amazon ECR
+#         id: login-ecr
+#         uses: aws-actions/amazon-ecr-login@aaf69d68aa3fb14c1d5a6be9ac61fe15b48453a2
+      - name: Login manually
+        id: login-ecr
+        run: |
+          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
+
+      # - name: Login to Docker Hub
+      #   uses: docker/login-action@v1
+      #   with:
+      #     username: ${{ secrets.DOCKER_USERNAME }}
+      #     password: ${{ secrets.DOCKER_TOKEN }}
 
       - name: Push edge image
-        run: make docker-push tag="klakegg/pdk:edge"
+        run: make docker-push tag="public.ecr.aws/openpeppol/pdk:edge"
 
       - name: Push tagged image
         if: startsWith(github.ref, 'refs/tags/v')
         run: |
-          make docker-push tag="klakegg/pdk:${{ env.PROJECT_VERSION }}"
-          make docker-push tag="klakegg/pdk:latest"
+          make docker-push tag="public.ecr.aws/openpeppol/pdk:${{ env.PROJECT_VERSION }}"
+          make docker-push tag="public.ecr.aws/openpeppol/pdk:latest"
 
   macos:
     name: MacOS distribution
